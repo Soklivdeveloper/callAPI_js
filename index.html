@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container" style="width: 1200px; margin: auto;">
+        <table rules="all" border="1">
+            <thead>
+                <th>ID</th>
+                <th>title</th>
+                <th>price</th>
+                <th>discription</th>
+                <th>category</th>
+                <th>image</th>
+                <th>rate</th>
+                <th>count</th>
+                <th>Action</th>
+            </thead>
+            <tbody id="tbody"></tbody>
+        </table>
+    </div>
+
+    <script>
+        fetch('https://fakestoreapi.com/products')
+        .then(res=>res.json())
+        .then(json=>{
+            let tr = '';
+
+            json.forEach(item => {
+             tr += `
+                <tr>
+                    <td>${item.id}</td>
+                    <td>${item.title}</td>
+                    <td>${item.price}</td>
+                    <td>${item.description}</td>
+                    <td>${item.category}</td>
+                    <td><img src = "${item.image}" style="width:60px "></td>
+                    <td>${item.rating.rate}</td>
+                    <td>${item.rating.count}</td>
+                    <td><button onclick="getiD(this)">Delail</button></td>
+                </tr>
+                `
+            });
+            document.getElementById('tbody').insertAdjacentHTML('beforeend', tr)
+
+        })
+
+        function getiD(row){
+            console.log(row.parentElement.parentElement.cells[0].innerHTML);
+            let id = row.parentElement.parentElement.cells[0].innerHTML;
+            sessionStorage.setItem('productid', id);
+
+            window.location.href = 'http://127.0.0.1:5500/detail.html';
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>View Detail</h1>
+    <div class="container" style="width: 1200px; margin: auto;">
+        <table rules="all" border="1">
+            <thead>
+                <th>ID</th>
+                <th>title</th>
+                <th>price</th>
+                <th>discription</th>
+                <th>category</th>
+                <th>image</th>
+                <th>rate</th>
+                <th>count</th>
+                <th>Action</th>
+            </thead>
+            <tbody id="tbody"></tbody>
+        </table>
+    </div>
+
+    <script>
+        console.log(sessionStorage.getItem('productid'));
+        let id = sessionStorage.getItem('productid');
+        fetch('https://fakestoreapi.com/products/' + id)
+        .then(res=>res.json())
+        .then(json=>{
+            let tr = `
+            <tr>
+                    <td>${json.id}</td>
+                    <td>${json.title}</td>
+                    <td>${json.price}</td>
+                    <td>${json.description}</td>
+                    <td>${json.category}</td>
+                    <td><img src = "${json.image}" style="width:60px "</td>
+                    <td>${json.rating.rate}</td>
+                    <td>${json.rating.count}</td>
+                    <td><button onclick="getiD(this)">Delail</button></td>
+            </tr>
+            `
+            document.getElementById('tbody').insertAdjacentHTML('beforeend', tr)
+        })
+
+
+    </script>
+</body>
+</html>
